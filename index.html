@@ -50,11 +50,12 @@
       background: #131621; color: white; outline: none; margin-bottom: 20px; font-size: 15px;
     }
 
+    /* Clean Ad Container (No borders, no text) */
     .clean-ad-box {
       width: 100%; display: flex; justify-content: center; align-items: center;
       margin: 15px 0; overflow: hidden; text-align: center; background: transparent;
     }
-    .ads-group-5, .ads-group-15 {
+    .ads-group-5, .ads-group-8 {
       display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; margin: 15px 0;
     }
 
@@ -209,48 +210,9 @@
 
       <div class="movie-grid" id="movieGrid"></div>
 
-      <!-- হোম পেজের একদম নিচে ১৫টি ব্যানার অ্যাড -->
-      <div class="ads-group-15" style="margin-top: 50px;">
-        <script>atOptions = {'key' : '2e7601e9a4903b2b62a0188347515e6e', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/2e7601e9a4903b2b62a0188347515e6e"></script>
-
-        <script data-cfasync="false" src="https://bancadeltempoidea.org/14/7afb72719d852e8d8c62c30347049cbc"></script>
-
-        <script>atOptions = {'key' : 'c840163a9d0e2cac985c206304ef90e6', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/c840163a9d0e2cac985c206304ef90e6"></script>
-
-        <script>atOptions = {'key' : '1196b1f23a8f7693bc6a46b11e956d29', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/1196b1f23a8f7693bc6a46b11e956d29"></script>
-
-        <script>atOptions = {'key' : '04ba5bdc62fb385f2336aeaa4866657e', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/04ba5bdc62fb385f2336aeaa4866657e"></script>
-
-        <script>atOptions = {'key' : 'fba6266e1bb2c17c74a98d9beecc4488', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/fba6266e1bb2c17c74a98d9beecc4488"></script>
-
-        <script>atOptions = {'key' : '11c2659717f7fc9d0e57aec3d10e47cd', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/11c2659717f7fc9d0e57aec3d10e47cd"></script>
-
-        <script data-cfasync="false" src="https://aarems.org/1/aaf28769d454716d823e6ff5823389ca"></script>
-
-        <script>atOptions = {'key' : '2e7601e9a4903b2b62a0188347515e6e', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/2e7601e9a4903b2b62a0188347515e6e"></script>
-
-        <script>atOptions = {'key' : 'c840163a9d0e2cac985c206304ef90e6', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/c840163a9d0e2cac985c206304ef90e6"></script>
-
-        <script>atOptions = {'key' : '1196b1f23a8f7693bc6a46b11e956d29', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/1196b1f23a8f7693bc6a46b11e956d29"></script>
-
-        <script>atOptions = {'key' : '04ba5bdc62fb385f2336aeaa4866657e', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/04ba5bdc62fb385f2336aeaa4866657e"></script>
-
-        <script data-cfasync="false" src="https://bancadeltempoidea.org/14/7afb72719d852e8d8c62c30347049cbc"></script>
-
+      <div class="clean-ad-box" style="margin-top: 35px;">
         <script async="async" data-cfasync="false" src="https://bancadeltempoidea.org/21/22b8209b432c0c7c295b13d5515fd85f"></script>
-
-        <script>atOptions = {'key' : 'fba6266e1bb2c17c74a98d9beecc4488', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/fba6266e1bb2c17c74a98d9beecc4488"></script>
+        <div id="container-22b8209b432c0c7c295b13d5515fd85f"></div>
       </div>
     </section>
   </main>
@@ -259,43 +221,37 @@
   <section id="downloadPage">
     <button class="back-btn" onclick="showHomePage()">← Back to Movies</button>
 
+    <!-- ওয়াচ পেজের শুরুতে ৫টি ব্যানার অ্যাড -->
+    <div class="ads-group-5" id="watchPageTopAds">
+      <script>atOptions = {'key' : '2e7601e9a4903b2b62a0188347515e6e', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {}};</script>
+      <script src="https://bancadeltempoidea.org/22/2e7601e9a4903b2b62a0188347515e6e"></script>
+
+      <script data-cfasync="false" src="https://bancadeltempoidea.org/14/7afb72719d852e8d8c62c30347049cbc"></script>
+
+      <script>atOptions = {'key' : 'c840163a9d0e2cac985c206304ef90e6', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {}};</script>
+      <script src="https://bancadeltempoidea.org/22/c840163a9d0e2cac985c206304ef90e6"></script>
+
+      <script>atOptions = {'key' : '1196b1f23a8f7693bc6a46b11e956d29', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}};</script>
+      <script src="https://bancadeltempoidea.org/22/1196b1f23a8f7693bc6a46b11e956d29"></script>
+
+      <script>atOptions = {'key' : '04ba5bdc62fb385f2336aeaa4866657e', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};</script>
+      <script src="https://bancadeltempoidea.org/22/04ba5bdc62fb385f2336aeaa4866657e"></script>
+    </div>
+
     <div class="dl-card">
-      <!-- ১. সবার উপরে মুভি পোস্টার ও টাইটেল -->
       <img id="dlPoster" class="dl-poster" src="" alt="Poster">
       <h2 id="dlTitle" style="font-size: 24px; margin-bottom: 6px;">Movie Name</h2>
       <p id="dlMeta" style="color: #c084fc; font-size: 13px; margin-bottom: 15px;">2026 • Full HD</p>
 
-      <!-- ২. ১৫ সেকেন্ডের স্মার্ট কাউন্টডাউন বক্স ও ভিডিও প্লেয়ার -->
+      <!-- ১৫ সেকেন্ডের স্মার্ট কাউন্টডাউন বক্স -->
       <div class="timer-box" id="timerBox">
         <div class="timer-circle" id="timerCount">15</div>
         <p style="font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 5px;">Generating High-Speed Google Drive Link...</p>
         <p style="font-size: 12px; color: #aaa;">Please wait 15 seconds while we prepare your download server.</p>
       </div>
 
-      <!-- ইনলাইন গুগল ড্রাইভ প্লেয়ার -->
-      <div class="drive-player-box" id="drivePlayerBox">
-        <iframe id="driveIframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      </div>
-
-      <!-- টাইমার শেষ হলে বাটনগুলো শো করবে -->
-      <div class="dl-links-box" id="dlLinksContainer"></div>
-
-      <!-- ৩. সমস্ত অ্যাডগুলো একদম নিচে সাজানো -->
-      <div class="ads-group-15" id="timerEndAds" style="display: none; margin-top: 30px;">
-        <script>atOptions = {'key' : '2e7601e9a4903b2b62a0188347515e6e', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/2e7601e9a4903b2b62a0188347515e6e"></script>
-
-        <script data-cfasync="false" src="https://bancadeltempoidea.org/14/7afb72719d852e8d8c62c30347049cbc"></script>
-
-        <script>atOptions = {'key' : 'c840163a9d0e2cac985c206304ef90e6', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/c840163a9d0e2cac985c206304ef90e6"></script>
-
-        <script>atOptions = {'key' : '1196b1f23a8f7693bc6a46b11e956d29', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/1196b1f23a8f7693bc6a46b11e956d29"></script>
-
-        <script>atOptions = {'key' : '04ba5bdc62fb385f2336aeaa4866657e', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/04ba5bdc62fb385f2336aeaa4866657e"></script>
-
+      <!-- টাইমার শেষ হলে বা ১৫ সেকেন্ড শেষে একসাথে ৮টি ব্যানার অ্যাড এখানে শো করবে -->
+      <div class="ads-group-8" id="timerEndAds" style="display: none;">
         <script>atOptions = {'key' : 'fba6266e1bb2c17c74a98d9beecc4488', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {}};</script>
         <script src="https://bancadeltempoidea.org/22/fba6266e1bb2c17c74a98d9beecc4488"></script>
 
@@ -317,16 +273,19 @@
         <script src="https://bancadeltempoidea.org/22/04ba5bdc62fb385f2336aeaa4866657e"></script>
 
         <script data-cfasync="false" src="https://bancadeltempoidea.org/14/7afb72719d852e8d8c62c30347049cbc"></script>
-
-        <script async="async" data-cfasync="false" src="https://bancadeltempoidea.org/21/22b8209b432c0c7c295b13d5515fd85f"></script>
-
-        <script>atOptions = {'key' : 'fba6266e1bb2c17c74a98d9beecc4488', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {}};</script>
-        <script src="https://bancadeltempoidea.org/22/fba6266e1bb2c17c74a98d9beecc4488"></script>
       </div>
+
+      <!-- ইনলাইন গুগল ড্রাইভ প্লেয়ার -->
+      <div class="drive-player-box" id="drivePlayerBox">
+        <iframe id="driveIframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
+
+      <!-- টাইমার শেষ হলে এই বাটনগুলো শো করবে -->
+      <div class="dl-links-box" id="dlLinksContainer"></div>
     </div>
   </section>
 
-  <!-- Movie Details Modal (মোট ১০টি ব্যানার অ্যাড নিচে রাখা হয়েছে) -->
+  <!-- Movie Details Modal (5টি ব্যানার অ্যাডসহ) -->
   <div class="modal" id="movieModal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal()">×</button>
@@ -337,8 +296,8 @@
         <p class="modal-desc" id="modalDesc">Loading details...</p>
         <button class="watch-btn" id="playTrailerBtn" onclick="handleMovieClick()">▶ Watch / Download Movie</button>
 
-        <!-- মোডাল পপআপের একদম নিচে মোট ১০টি ব্যানার অ্যাড -->
-        <div class="ads-group-10" style="margin-top: 15px; display: flex; flex-direction: column; gap: 12px; align-items: center;">
+        <!-- মুভিতে ক্লিক করার পর মোডাল পপআপে ৫টি ব্যানার অ্যাড -->
+        <div class="ads-group-5" style="margin-top: 15px;">
           <script>atOptions = {'key' : '1196b1f23a8f7693bc6a46b11e956d29', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}};</script>
           <script src="https://bancadeltempoidea.org/22/1196b1f23a8f7693bc6a46b11e956d29"></script>
 
@@ -352,19 +311,6 @@
 
           <script>atOptions = {'key' : 'c840163a9d0e2cac985c206304ef90e6', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {}};</script>
           <script src="https://bancadeltempoidea.org/22/c840163a9d0e2cac985c206304ef90e6"></script>
-
-          <script>atOptions = {'key' : '2e7601e9a4903b2b62a0188347515e6e', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {}};</script>
-          <script src="https://bancadeltempoidea.org/22/2e7601e9a4903b2b62a0188347515e6e"></script>
-
-          <script data-cfasync="false" src="https://bancadeltempoidea.org/14/7afb72719d852e8d8c62c30347049cbc"></script>
-
-          <script>atOptions = {'key' : '11c2659717f7fc9d0e57aec3d10e47cd', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {}};</script>
-          <script src="https://bancadeltempoidea.org/22/11c2659717f7fc9d0e57aec3d10e47cd"></script>
-
-          <script async="async" data-cfasync="false" src="https://bancadeltempoidea.org/21/22b8209b432c0c7c295b13d5515fd85f"></script>
-
-          <script>atOptions = {'key' : 'fba6266e1bb2c17c74a98d9beecc4488', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {}};</script>
-          <script src="https://bancadeltempoidea.org/22/fba6266e1bb2c17c74a98d9beecc4488"></script>
         </div>
       </div>
     </div>
@@ -558,7 +504,7 @@
         if (timeLeft <= 0) {
           clearInterval(countdownInterval);
           timerBox.style.display = "none";
-          timerEndAds.style.display = "block"; // টাইমার শেষ হলে নিচে অ্যাডগুলো শো করবে
+          timerEndAds.style.display = "flex"; // ১৫ সেকেন্ড শেষে ৮টি ব্যানার অ্যাড শো করবে
           container.style.display = "flex";
         }
       }, 1000);
