@@ -1,684 +1,610 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOWHIDUL's Premium Neon Tic Tac Toe</title>
-    
-<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CINEBOX - Watch & Download Movies</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #080a10; color: #fff; font-family: Arial, sans-serif; }
 
-    <style>
-        /* Global Reset and Body Styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            color: #fff;
-        }
+    .navbar {
+      height: 70px; padding: 0 7%; display: flex; align-items: center;
+      justify-content: space-between; background: #0c0e16; position: sticky;
+      top: 0; z-index: 10; border-bottom: 1px solid #1a1d2b;
+    }
+    .logo { font-size: 25px; font-weight: 900; color: white; text-decoration: none; }
+    .logo span { color: #a855f7; }
+    .search-btn {
+      background: #202331; color: white; border: none; padding: 10px 16px;
+      border-radius: 8px; font-size: 20px; cursor: pointer;
+    }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #100b21, #0a0614);
-            overflow: hidden;
-            position: relative;
-        }
+    .hero {
+      min-height: 360px; display: flex; align-items: center; padding: 45px 8%;
+      background: linear-gradient(90deg, #080a10 15%, #080a10dd 55%, transparent),
+                  linear-gradient(0deg, #080a10, transparent 70%),
+                  url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1600");
+      background-size: cover; background-position: center;
+    }
+    .hero-content { max-width: 520px; }
+    .tag { color: #c084fc; letter-spacing: 3px; font-size: 12px; font-weight: bold; }
+    .hero h1 { font-size: clamp(34px, 7vw, 60px); line-height: 1.05; margin: 16px 0; }
+    .hero p { color: #bbb; line-height: 1.7; margin-bottom: 22px; }
 
-        /* Animated Background Pattern */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 15% 50%, rgba(209, 97, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 85% 50%, rgba(86, 186, 237, 0.1) 0%, transparent 50%);
-            background-size: 800px 800px;
-            animation: moveBackground 20s linear infinite alternate;
-            opacity: 0.3;
-            z-index: 0;
-        }
+    .watch-btn {
+      display: inline-block; background: #9333ea; color: white; padding: 14px 22px;
+      border-radius: 8px; text-decoration: none; font-weight: bold; border: none;
+      cursor: pointer; font-size: 15px; text-align: center; width: 100%;
+      transition: 0.2s;
+    }
+    .watch-btn:hover { background: #7e22ce; }
 
-        @keyframes moveBackground {
-            0% { background-position: 0 0; }
-            100% { background-position: 100% 100%; }
-        }
-        
-        /* Neon Effect Utility - Purple */
-        .neon-text {
-            color: #e099ff;
-            text-shadow: 0 0 8px #e099ff, 0 0 20px rgba(224, 153, 255, 0.7);
-        }
+    .movies-section { padding: 35px 7%; }
+    .section-heading { margin-bottom: 20px; }
+    .section-heading h2 { font-size: 25px; margin-bottom: 6px; }
+    .section-heading span { color: #888; font-size: 13px; }
 
-        /* Start Screen Styling */
-        #start-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 40px;
-            background: rgba(28, 28, 54, 0.7);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            z-index: 1;
-            animation: fadeIn 1s ease-out;
-        }
+    #searchInput {
+      width: 100%; padding: 15px; border-radius: 9px; border: 1px solid #292d3b;
+      background: #131621; color: white; outline: none; margin-bottom: 20px; font-size: 15px;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    /* Ad Container Styling */
+    .ad-banner-box {
+      width: 100%; min-height: 70px; background: #11141f;
+      border: 1px dashed #33384d; border-radius: 10px; margin: 18px 0;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; overflow: hidden; padding: 8px; text-align: center;
+    }
+    .ad-label {
+      font-size: 10px; color: #666; letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 4px;
+    }
 
-        #start-screen h1 {
-            font-size: 2.5em;
-            margin-bottom: 40px;
-            font-weight: 700;
-        }
-        
-        /* Specific styling for the TOWHIDUL part in the H1 (Blue Neon Flicker) */
-        .name-neon {
-            display: block;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            color: #88d4f7;
-            text-shadow: 0 0 8px #88d4f7, 0 0 20px rgba(136, 212, 247, 0.7);
-            animation: neon-flicker 2s infinite alternate;
-        }
-        
-        /* Neon Flicker Keyframes */
-        @keyframes neon-flicker {
-            0%, 18%, 22%, 25%, 53%, 57%, 100% {
-                text-shadow: 
-                    0 0 4px #fff,
-                    0 0 11px #fff,
-                    0 0 19px #fff,
-                    0 0 40px #88d4f7,
-                    0 0 80px #88d4f7;
-                color: #fff;
-            }
-            20%, 24%, 55% {        
-                text-shadow: none;
-                color: #111;
-            }
-        }
+    .categories { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 20px; }
+    .categories button {
+      padding: 9px 18px; border: 1px solid #292d3b; background: #131621;
+      color: #aaa; border-radius: 20px; white-space: nowrap; cursor: pointer;
+    }
+    .categories button.active { background: #9333ea; color: white; border-color: #9333ea; }
 
+    .movie-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .movie-card { cursor: pointer; min-width: 0; position: relative; }
+    .poster {
+      aspect-ratio: 2 / 3; border-radius: 12px; background: #151824;
+      overflow: hidden; transition: 0.3s; border: 1px solid transparent; position: relative;
+    }
+    .poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .movie-card:hover .poster { transform: translateY(-5px); border-color: #a855f7; }
+    .badge-hd {
+      position: absolute; top: 8px; left: 8px; background: #16a34a;
+      color: white; font-size: 10px; font-weight: bold; padding: 3px 7px; border-radius: 4px;
+    }
+    .movie-card h3 {
+      margin-top: 10px; font-size: 15px; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .movie-card p { color: #888; margin-top: 5px; font-size: 12px; }
 
-        /* START Button Styling */
-        #start-button {
-            background: linear-gradient(45deg, #d161ff, #a03cff);
-            border: none;
-            padding: 18px 40px;
-            font-size: 1.4em;
-            font-weight: bold;
-            border-radius: 60px;
-            cursor: pointer;
-            color: #0d0d1a;
-            box-shadow: 0 0 20px rgba(209, 97, 255, 0.8);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
+    /* Modal */
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(8, 10, 16, 0.95); z-index: 100; justify-content: center;
+      align-items: center; padding: 15px; overflow-y: auto;
+    }
+    .modal-content {
+      background: #121520; width: 100%; max-width: 720px; border-radius: 14px;
+      overflow: hidden; border: 1px solid #292d3b; position: relative;
+      max-height: 92vh; overflow-y: auto;
+    }
+    .close-btn {
+      position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.75);
+      color: white; border: none; width: 36px; height: 36px; border-radius: 50%;
+      font-size: 20px; cursor: pointer; z-index: 10;
+    }
+    .modal-banner { width: 100%; height: 220px; object-fit: cover; }
+    .modal-body { padding: 20px; }
+    .modal-body h2 { font-size: 22px; margin-bottom: 8px; }
+    .modal-meta { color: #c084fc; font-size: 13px; margin-bottom: 12px; font-weight: bold; }
+    .modal-desc { color: #bbb; font-size: 14px; line-height: 1.6; margin-bottom: 18px; }
 
-        #start-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: all 0.5s ease;
-            z-index: -1;
-            transform: skewX(-20deg);
-        }
+    /* Download Page View & 15s Timer */
+    #downloadPage {
+      display: none;
+      padding: 25px 7%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .back-btn {
+      background: #202331; color: #fff; border: 1px solid #33384d;
+      padding: 10px 18px; border-radius: 8px; cursor: pointer;
+      font-size: 14px; margin-bottom: 20px; display: inline-block;
+    }
+    .dl-card {
+      background: #121520; border: 1px solid #292d3b; border-radius: 14px;
+      padding: 22px; text-align: center;
+    }
+    .dl-poster {
+      width: 140px; border-radius: 10px; margin: 0 auto 15px; display: block;
+      border: 2px solid #9333ea;
+    }
+    .timer-box {
+      background: #1a1e2e; border: 1px solid #9333ea; border-radius: 12px;
+      padding: 20px; margin: 20px 0;
+    }
+    .timer-circle {
+      width: 64px; height: 64px; border-radius: 50%; background: #9333ea;
+      color: white; font-size: 24px; font-weight: bold; display: flex;
+      align-items: center; justify-content: center; margin: 0 auto 12px;
+      box-shadow: 0 0 15px rgba(147, 51, 234, 0.5);
+    }
+    .dl-links-box {
+      display: none; flex-direction: column; gap: 12px; margin-top: 20px;
+    }
+    .gdrive-btn {
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(90deg, #16a34a, #15803d); color: white;
+      padding: 15px 20px; border-radius: 10px; text-decoration: none;
+      font-weight: bold; font-size: 15px; border: none; cursor: pointer;
+    }
+    .gdrive-btn:hover { opacity: 0.92; }
+    .gdrive-btn span.quality {
+      background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 6px; font-size: 12px;
+    }
+    .drive-player-box {
+      margin-top: 20px; width: 100%; aspect-ratio: 16 / 9;
+      background: #000; border-radius: 10px; overflow: hidden; display: none;
+    }
+    .drive-player-box iframe { width: 100%; height: 100%; border: none; }
 
-        #start-button:hover::before {
-            left: 100%;
-        }
+    footer {
+      text-align: center; padding: 30px; background: #0c0e16;
+      color: #888; line-height: 2; margin-top: 30px;
+    }
+    footer h2 { color: #a855f7; }
 
-        #start-button:hover {
-            box-shadow: 0 0 30px rgba(209, 97, 255, 1);
-            transform: translateY(-3px);
-        }
-
-        /* Game Container Styling */
-        #game-container {
-            display: none;
-            width: 100%;
-            max-width: 450px;
-            min-height: 700px;
-            background: rgba(20, 20, 40, 0.8);
-            border-radius: 35px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7), inset 0 0 30px rgba(255, 255, 255, 0.15);
-            padding: 30px;
-            position: relative;
-            z-index: 10;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            animation: slideIn 0.8s ease-out;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(50px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* Grid Background Effect */
-        #game-container::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            background: 
-                repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(209, 97, 255, 0.08) 40px, rgba(209, 97, 255, 0.08) 42px), 
-                repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(86, 186, 237, 0.08) 40px, rgba(86, 186, 237, 0.08) 42px);
-            opacity: 0.6;
-            z-index: -1;
-            border-radius: 30px;
-            filter: blur(0.5px);
-        }
-
-        /* Game Header */
-        .header {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-bottom: 40px;
-            font-size: 1.2em;
-            padding: 15px 0;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.15);
-            position: relative;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: -2px;
-            width: 40%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #e099ff, transparent);
-            transform: translateX(-50%);
-        }
-
-        .player, .computer {
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .player {
-            color: #88d4f7;
-            text-shadow: 0 0 8px #88d4f7;
-            background: rgba(86, 186, 237, 0.1);
-        }
-
-        .computer {
-            color: #ff9999;
-            text-shadow: 0 0 8px #ff9999;
-            background: rgba(255, 97, 97, 0.1);
-        }
-        
-        .header span:nth-child(2) {
-            font-size: 0.9em;
-            opacity: 0.7;
-            font-weight: normal;
-        }
-
-        /* Game Board */
-        #board {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 15px;
-            width: 100%;
-            aspect-ratio: 1 / 1; 
-            max-width: 380px;
-            margin: 0 auto;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 0 5px 20px rgba(0, 0, 0, 0.4);
-            position: relative;
-        }
-
-        .cell {
-            background: #2b2b52;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 4.5em;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            position: relative;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .cell:hover {
-            background: #3a3a6b;
-            transform: scale(1.02);
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 255, 255, 0.1);
-        }
-
-        .cell.O {
-            color: #88d4f7;
-            text-shadow: 0 0 12px #88d4f7, 0 0 25px rgba(136, 212, 247, 0.6);
-        }
-
-        .cell.X {
-            color: #ff9999;
-            text-shadow: 0 0 12px #ff9999, 0 0 25px rgba(255, 153, 153, 0.6);
-        }
-
-        /* Status and Result Area */
-        #status {
-            text-align: center;
-            margin-top: 50px;
-            font-size: 1.8em;
-            min-height: 50px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        #reset-button {
-            display: block;
-            margin: 30px auto;
-            background: none;
-            border: 2px solid #e099ff;
-            padding: 12px 25px;
-            font-size: 1.1em;
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
-            color: #e099ff;
-            text-shadow: 0 0 8px #e099ff;
-            box-shadow: 0 0 15px rgba(224, 153, 255, 0.6);
-            transition: all 0.4s ease;
-        }
-
-        #reset-button:hover {
-            background: linear-gradient(45deg, #e099ff, #c35cff);
-            color: #0d0d1a;
-            box-shadow: 0 0 25px rgba(224, 153, 255, 1), 0 0 40px rgba(224, 153, 255, 0.8);
-            transform: translateY(-2px);
-        }
-
-        /* Win Line Styling */
-        .win-line {
-            position: absolute;
-            background: linear-gradient(to right, rgba(255,255,255,0), #fff, rgba(255,255,255,0));
-            box-shadow: 0 0 15px #fff, 0 0 30px #fff;
-            z-index: 2;
-            transition: all 0.6s ease-in-out;
-            opacity: 0;
-            animation: winLineFadeIn 0.8s forwards;
-        }
-
-        @keyframes winLineFadeIn {
-            from { opacity: 0; transform: scaleX(0.5) scaleY(0.5); }
-            to { opacity: 1; transform: scaleX(1) scaleY(1); }
-        }
-
-        /* Diagonal lines */
-        .win-0-4-8 {
-            width: calc(140% + 15px);
-            height: 10px;
-            transform: translate(-50%, -50%) rotate(45deg);
-            top: 50%;
-            left: 50%;
-        }
-        .win-2-4-6 {
-            width: calc(140% + 15px);
-            height: 10px;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            top: 50%;
-            left: 50%;
-        }
-
-        /* Row and Column lines */
-        .win-line-h {
-            width: calc(100% - 30px);
-            height: 10px;
-            left: 15px;
-            transform-origin: left;
-        }
-        .win-line-v {
-            height: calc(100% - 30px);
-            width: 10px;
-            top: 15px;
-            transform-origin: top;
-        }
-        .win-row-0 { top: calc((100% - 30px) / 6 + 15px); }
-        .win-row-1 { top: calc((100% - 30px) / 2 + 15px); }
-        .win-row-2 { top: calc((100% - 30px) * 5 / 6 + 15px); }
-        .win-col-0 { left: calc((100% - 30px) / 6 + 15px); }
-        .win-col-1 { left: calc((100% - 30px) / 2 + 15px); }
-        .win-col-2 { left: calc((100% - 30px) * 5 / 6 + 15px); }
-
-        /* Confetti overrides for flower style */
-        .js-confetti__ribbon {
-            background-color: transparent !important;
-        }
-        .js-confetti__flake {
-            background-color: transparent !important;
-            box-shadow: none !important;
-            font-size: 20px;
-        }
-
-        /* Media Query for Mobile Responsiveness */
-        @media (max-width: 500px) {
-            #game-container {
-                margin: 15px;
-                min-height: 580px;
-                max-width: 350px;
-                padding: 20px;
-                border-radius: 25px;
-            }
-            #board {
-                max-width: 280px;
-                gap: 10px;
-            }
-            .cell {
-                font-size: 3.5em;
-                border-radius: 10px;
-            }
-            #start-screen h1 {
-                font-size: 1.8em;
-            }
-            .name-neon {
-                font-size: 1.1em;
-            }
-            #start-button {
-                padding: 12px 25px;
-                font-size: 1.1em;
-            }
-        }
-    </style>
+    @media (max-width: 700px) {
+      .hero { min-height: 300px; padding: 30px 6%; }
+      .movies-section { padding: 25px 5%; }
+      .movie-grid { grid-template-columns: repeat(2, 1fr); gap: 16px 12px; }
+      .modal-banner { height: 170px; }
+    }
+  </style>
 </head>
 <body>
 
-    <div id="start-screen">
-        <h1 class="neon-text">
-            <span class="name-neon">TOWHIDUL's</span> 
-            Premium Tic Tac Toe
-        </h1>
-        <button id="start-button">START</button>
+  <header class="navbar">
+    <a class="logo" href="#" onclick="showHomePage()">CINE<span>BOX</span></a>
+    <button class="search-btn" onclick="focusSearch()">⌕</button>
+  </header>
+
+  <!-- হোম পেজ -->
+  <main id="homePage">
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <span class="tag">DIRECT GOOGLE DRIVE STREAM & DOWNLOAD</span>
+        <h1>Unlimited<br>Movies.</h1>
+        <p>Watch online or download high-speed Google Drive links instantly.</p>
+        <a href="#movies" class="watch-btn" style="display:inline-block; width:auto;">Explore Movies →</a>
+      </div>
+    </section>
+
+    <section class="movies-section" id="movies">
+      <div class="section-heading">
+        <h2 id="sectionTitle">Available on Google Drive</h2>
+        <span>Tap any movie to Watch or Download</span>
+      </div>
+
+      <input type="search" id="searchInput" placeholder="Search any movie...">
+
+      <!-- হোম পেজ টপ ব্যানার অ্যাড (কোড ১) -->
+      <div class="ad-banner-box">
+        <span class="ad-label">Advertisement</span>
+        <script data-cfasync="false" src="https://aarems.org/1/aaf28769d454716d823e6ff5823389ca"></script>
+      </div>
+
+      <div class="categories" id="categories">
+        <button class="active" data-genre="custom">Available G-Drive</button>
+        <button data-genre="">Trending</button>
+        <button data-genre="28">Action</button>
+        <button data-genre="878">Sci-Fi</button>
+        <button data-genre="18">Drama</button>
+        <button data-genre="35">Comedy</button>
+      </div>
+
+      <div class="movie-grid" id="movieGrid"></div>
+
+      <!-- হোম পেজ মিডল ব্যানার অ্যাড (কোড ২) -->
+      <div class="ad-banner-box" style="margin-top: 35px;">
+        <span class="ad-label">Advertisement</span>
+        <script async="async" data-cfasync="false" src="https://bancadeltempoidea.org/21/22b8209b432c0c7c295b13d5515fd85f"></script>
+        <div id="container-22b8209b432c0c7c295b13d5515fd85f"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ডাউনলোড ও ওয়াচ পেজ (তোমার দেওয়া সব ব্যানার অ্যাড দিয়ে সাজানো) -->
+  <section id="downloadPage">
+    <button class="back-btn" onclick="showHomePage()">← Back to Movies</button>
+
+    <!-- ডাউনলোড পেজ টপ ব্যানার অ্যাড (কোড ১০ - 728x90 বড় ব্যানার) -->
+    <div class="ad-banner-box">
+      <span class="ad-label">Advertisement</span>
+      <script>
+        atOptions = {
+          'key' : '2e7601e9a4903b2b62a0188347515e6e',
+          'format' : 'iframe',
+          'height' : 90,
+          'width' : 728,
+          'params' : {}
+        };
+      </script>
+      <script src="https://bancadeltempoidea.org/22/2e7601e9a4903b2b62a0188347515e6e"></script>
     </div>
 
-    <div id="game-container" style="display: none;">
-        <div class="header">
-            <span class="player">PLAYER (O)</span>
-            <span>VS</span>
-            <span class="computer">COMPUTER (X)</span>
+    <div class="dl-card">
+      <img id="dlPoster" class="dl-poster" src="" alt="Poster">
+      <h2 id="dlTitle" style="font-size: 24px; margin-bottom: 6px;">Movie Name</h2>
+      <p id="dlMeta" style="color: #c084fc; font-size: 13px; margin-bottom: 15px;">2026 • Full HD</p>
+
+      <!-- টাইমার বক্সের ঠিক উপরে ব্যানার অ্যাড (কোড ৪) -->
+      <div class="ad-banner-box" style="margin: 12px 0;">
+        <span class="ad-label">Sponsored</span>
+        <script data-cfasync="false" src="https://bancadeltempoidea.org/14/7afb72719d852e8d8c62c30347049cbc"></script>
+      </div>
+
+      <!-- ১৫ সেকেন্ডের স্মার্ট কাউন্টডাউন বক্স -->
+      <div class="timer-box" id="timerBox">
+        <div class="timer-circle" id="timerCount">15</div>
+        <p style="font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 5px;">Generating High-Speed Google Drive Link...</p>
+        <p style="font-size: 12px; color: #aaa;">Please wait 15 seconds while we prepare your download server.</p>
+      </div>
+
+      <!-- ইনলাইন গুগল ড্রাইভ প্লেয়ার -->
+      <div class="drive-player-box" id="drivePlayerBox">
+        <iframe id="driveIframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
+
+      <!-- টাইমার শেষ হলে এই বাটনগুলো শো করবে -->
+      <div class="dl-links-box" id="dlLinksContainer"></div>
+    </div>
+
+    <!-- ডাউনলোড পেজ মিডল ব্যানার অ্যাড (কোড ৫ - 468x60) -->
+    <div class="ad-banner-box" style="margin-top: 20px;">
+      <span class="ad-label">Advertisement</span>
+      <script>
+        atOptions = {
+          'key' : 'c840163a9d0e2cac985c206304ef90e6',
+          'format' : 'iframe',
+          'height' : 60,
+          'width' : 468,
+          'params' : {}
+        };
+      </script>
+      <script src="https://bancadeltempoidea.org/22/c840163a9d0e2cac985c206304ef90e6"></script>
+    </div>
+
+    <!-- ডাউনলোড পেজ বটম ব্যানার অ্যাড (কোড ৬ - 300x250) -->
+    <div class="ad-banner-box" style="margin-top: 20px;">
+      <span class="ad-label">Sponsored</span>
+      <script>
+        atOptions = {
+          'key' : '1196b1f23a8f7693bc6a46b11e956d29',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+      </script>
+      <script src="https://bancadeltempoidea.org/22/1196b1f23a8f7693bc6a46b11e956d29"></script>
+    </div>
+  </section>
+
+  <!-- Movie Details Modal -->
+  <div class="modal" id="movieModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <img id="modalBanner" class="modal-banner" src="" alt="Banner">
+      <div class="modal-body">
+        <h2 id="modalTitle">Movie Title</h2>
+        <div class="modal-meta" id="modalMeta">2026 • ★ 8.5</div>
+        <p class="modal-desc" id="modalDesc">Loading details...</p>
+        <button class="watch-btn" id="playTrailerBtn" onclick="handleMovieClick()">▶ Watch / Download Movie</button>
+
+        <!-- পপআপ ব্যানার অ্যাড (কোড ৯ - 320x50 মোবাইল ফ্রেন্ডলি) -->
+        <div class="ad-banner-box" style="margin-top: 18px; margin-bottom: 0;">
+          <span class="ad-label">Sponsored</span>
+          <script>
+            atOptions = {
+              'key' : '04ba5bdc62fb385f2336aeaa4866657e',
+              'format' : 'iframe',
+              'height' : 50,
+              'width' : 320,
+              'params' : {}
+            };
+          </script>
+          <script src="https://bancadeltempoidea.org/22/04ba5bdc62fb385f2336aeaa4866657e"></script>
         </div>
-
-        <div id="board">
-            </div>
-
-        <div id="status" class="neon-text"></div>
-        <button id="reset-button" style="display: none;">Play Again</button>
+      </div>
     </div>
+  </div>
 
-    <audio id="click-sound" src="click.mp3"></audio>
-    <audio id="win-sound" src="win.mp3"></audio>
-    <audio id="tie-sound" src="tie.mp3"></audio>
+  <footer>
+    <h2>CINEBOX</h2>
+    <p>High-Speed Google Drive Movie Portal</p>
+    <p>© 2026 CINEBOX. All rights reserved.</p>
+  </footer>
 
-    <script>
-        // DOM Elements
-        const startScreen = document.getElementById('start-screen');
-        const startGameButton = document.getElementById('start-button');
-        const gameContainer = document.getElementById('game-container');
-        const boardElement = document.getElementById('board');
-        const statusElement = document.getElementById('status');
-        const resetButton = document.getElementById('reset-button');
-        
-        // Audio Elements
-        const clickSound = document.getElementById('click-sound');
-        const winSound = document.getElementById('win-sound');
-        const tieSound = document.getElementById('tie-sound');
+  <script>
+    const API_KEY = "fad86037066e7c1fc5a2016ad3f746c8";
+    const BASE_URL = "https://api.themoviedb.org/3";
+    const IMG_URL = "https://image.tmdb.org/t/p/w500";
+    const BACKDROP_URL = "https://image.tmdb.org/t/p/w780";
 
-        // Confetti instance and Emojis
-        const jsConfetti = new JSConfetti();
-        const flowerEmojis = ['🌸', '🌺', '🌼', '🌷', '🌻'];
+    const GOOGLE_DRIVE_MOVIES = {
+      "533535": [
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
+        { label: "Download 720p (Google Drive)", quality: "850 MB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" },
+        { label: "Download 1080p Full HD", quality: "1.8 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+      ],
+      "912649": [
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
+        { label: "Download 720p (Google Drive)", quality: "900 MB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+      ],
+      "76600": [
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
+        { label: "Download 1080p Full HD", quality: "2.1 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+      ],
+      "157336": [
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
+        { label: "Download 1080p Full HD", quality: "2.4 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+      ],
+      "27205": [
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
+        { label: "Download 720p (Google Drive)", quality: "1.1 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+      ],
+      "872585": [
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
+        { label: "Download 1080p Full HD", quality: "2.0 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+      ],
+      "693134": [
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
+        { label: "Download 720p (Google Drive)", quality: "950 MB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+      ],
+      "634649": [
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
+        { label: "Download 1080p Full HD", quality: "1.9 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+      ],
+      "438631": [
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
+        { label: "Download 720p (Google Drive)", quality: "900 MB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+      ],
+      "550": [
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
+        { label: "Download 1080p Full HD", quality: "1.6 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+      ],
+      "680": [
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
+        { label: "Download 720p (Google Drive)", quality: "1.2 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+      ],
+      "122": [
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
+        { label: "Download 1080p Full HD", quality: "2.5 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+      ]
+    };
 
-        // Utility function to play sound
-        function playSound(audioElement) {
-            audioElement.currentTime = 0; // Rewind to start
-            audioElement.play().catch(e => console.log("Audio play failed:", e));
+    const homePage = document.getElementById("homePage");
+    const downloadPage = document.getElementById("downloadPage");
+    const grid = document.getElementById("movieGrid");
+    const searchInput = document.getElementById("searchInput");
+    const sectionTitle = document.getElementById("sectionTitle");
+    const modal = document.getElementById("movieModal");
+    const modalBanner = document.getElementById("modalBanner");
+    const playTrailerBtn = document.getElementById("playTrailerBtn");
+
+    let currentMovie = null;
+    let countdownInterval = null;
+
+    async function loadCustomDriveMovies() {
+      grid.innerHTML = "<p style='color:#888;'>Loading Google Drive Movies...</p>";
+      const ids = Object.keys(GOOGLE_DRIVE_MOVIES);
+      const movies = [];
+      for (const id of ids) {
+        try {
+          const res = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
+          const data = await res.json();
+          if (data && data.id) movies.push(data);
+        } catch (e) {}
+      }
+      displayMovies(movies);
+    }
+
+    async function fetchMovies(url) {
+      grid.innerHTML = "<p style='color:#888;'>Loading movies...</p>";
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayMovies(data.results || []);
+      } catch (err) {
+        grid.innerHTML = "<p style='color:#f87171;'>মুভি লোড করতে সমস্যা হয়েছে।</p>";
+      }
+    }
+
+    function displayMovies(movies) {
+      grid.innerHTML = "";
+      if (!movies.length) {
+        grid.innerHTML = "<p style='color:#888;'>কোনো মুভি পাওয়া যায়নি।</p>";
+        return;
+      }
+
+      movies.forEach(movie => {
+        if (!movie.poster_path) return;
+        const card = document.createElement("div");
+        card.className = "movie-card";
+        card.onclick = () => openDetails(movie);
+
+        const year = movie.release_date ? movie.release_date.split("-")[0] : "N/A";
+        const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A";
+        const hasDrive = GOOGLE_DRIVE_MOVIES[movie.id] ? `<span class="badge-hd">G-DRIVE</span>` : "";
+
+        card.innerHTML = `
+          <div class="poster">
+            ${hasDrive}
+            <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}" loading="lazy">
+          </div>
+          <h3>${movie.title}</h3>
+          <p>${year} • ★ ${rating}</p>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openDetails(movie) {
+      currentMovie = movie;
+
+      const year = movie.release_date ? movie.release_date.split("-")[0] : "N/A";
+      const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A";
+
+      document.getElementById("modalTitle").textContent = movie.title;
+      document.getElementById("modalMeta").textContent = `${year} • ★ ${rating} • Lang: ${movie.original_language.toUpperCase()}`;
+      document.getElementById("modalDesc").textContent = movie.overview || "No description available.";
+
+      const bannerPath = movie.backdrop_path || movie.poster_path;
+      modalBanner.src = BACKDROP_URL + bannerPath;
+      playTrailerBtn.textContent = "▶ Watch / Download Movie";
+
+      modal.style.display = "flex";
+    }
+
+    function handleMovieClick() {
+      if (!currentMovie) return;
+      openDownloadPage(currentMovie);
+    }
+
+    function openDownloadPage(movie) {
+      closeModal();
+      homePage.style.display = "none";
+      downloadPage.style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      document.getElementById("dlPoster").src = IMG_URL + movie.poster_path;
+      document.getElementById("dlTitle").textContent = movie.title;
+      const year = movie.release_date ? movie.release_date.split("-")[0] : "2026";
+      document.getElementById("dlMeta").textContent = `${year} • Dual Audio / Original • Google Drive Server`;
+
+      const drivePlayerBox = document.getElementById("drivePlayerBox");
+      const driveIframe = document.getElementById("driveIframe");
+      drivePlayerBox.style.display = "none";
+      driveIframe.src = "";
+
+      const timerBox = document.getElementById("timerBox");
+      const timerCount = document.getElementById("timerCount");
+      const container = document.getElementById("dlLinksContainer");
+
+      container.innerHTML = "";
+      container.style.display = "none";
+      timerBox.style.display = "block";
+
+      clearInterval(countdownInterval);
+      let timeLeft = 15;
+      timerCount.textContent = timeLeft;
+
+      countdownInterval = setInterval(() => {
+        timeLeft--;
+        timerCount.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(countdownInterval);
+          timerBox.style.display = "none";
+          container.style.display = "flex";
         }
+      }, 1000);
 
-        // Game State Variables
-        let board = ['', '', '', '', '', '', '', '', ''];
-        let currentPlayer = 'O'; // Player starts
-        let isGameActive = false;
-        const winningConditions = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-            [0, 4, 8], [2, 4, 6]             // Diagonals
-        ];
+      const links = GOOGLE_DRIVE_MOVIES[movie.id];
 
-        // --- Game Initialization ---
-        
-        startGameButton.addEventListener('click', () => {
-            startScreen.style.display = 'none';
-            gameContainer.style.display = 'block';
-            resetGame();
+      if (links && links.length > 0) {
+        links.forEach(item => {
+          if (item.isStream && item.driveFileId) {
+            const btn = document.createElement("button");
+            btn.className = "gdrive-btn";
+            btn.style.background = "linear-gradient(90deg, #9333ea, #7e22ce)";
+            btn.innerHTML = `<span>▶ ${item.label}</span> <span class="quality">${item.quality}</span>`;
+            btn.onclick = () => {
+              drivePlayerBox.style.display = "block";
+              driveIframe.src = `https://drive.google.com/file/d/${item.driveFileId}/preview`;
+            };
+            container.appendChild(btn);
+          } else {
+            const a = document.createElement("a");
+            a.className = "gdrive-btn";
+            a.href = item.url;
+            a.target = "_blank";
+            a.innerHTML = `<span>⬇ ${item.label}</span> <span class="quality">${item.quality}</span>`;
+            container.appendChild(a);
+          }
         });
+      } else {
+        container.innerHTML = `
+          <div style="padding:15px; background:#1a1e2e; border-radius:8px; color:#facc15; font-size:14px;">
+            এই মুভিটির Google Drive ফাইল এখনো আপলোড করা হচ্ছে। খুব শীঘ্রই লিংক যুক্ত করা হবে!
+          </div>
+        `;
+      }
+    }
 
-        resetButton.addEventListener('click', resetGame);
+    function showHomePage() {
+      clearInterval(countdownInterval);
+      document.getElementById("driveIframe").src = "";
+      downloadPage.style.display = "none";
+      homePage.style.display = "block";
+    }
 
-        function initializeBoard() {
-            boardElement.innerHTML = ''; // Clear previous board
-            board.forEach((_cell, index) => {
-                const cellElement = document.createElement('div');
-                cellElement.classList.add('cell');
-                cellElement.setAttribute('data-index', index);
-                cellElement.addEventListener('click', handleCellClick);
-                boardElement.appendChild(cellElement);
-            });
+    function closeModal() {
+      modal.style.display = "none";
+    }
+
+    let searchTimer;
+    searchInput.addEventListener("input", () => {
+      clearTimeout(searchTimer);
+      const query = searchInput.value.trim();
+      searchTimer = setTimeout(() => {
+        if (query) {
+          sectionTitle.textContent = `Search: "${query}"`;
+          fetchMovies(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
+        } else {
+          sectionTitle.textContent = "Available on Google Drive";
+          loadCustomDriveMovies();
         }
+      }, 500);
+    });
 
-        function resetGame() {
-            board = ['', '', '', '', '', '', '', '', ''];
-            currentPlayer = 'O'; // Player starts
-            isGameActive = true;
-            statusElement.textContent = "Your Turn (O)";
-            resetButton.style.display = 'none';
-            
-            // Remove any existing win line
-            const winLine = document.querySelector('.win-line');
-            if (winLine) {
-                winLine.remove();
-            }
-
-            initializeBoard();
+    document.querySelectorAll(".categories button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelector(".categories button.active")?.classList.remove("active");
+        btn.classList.add("active");
+        const genreId = btn.dataset.genre;
+        searchInput.value = "";
+        if (genreId === "custom") {
+          sectionTitle.textContent = "Available on Google Drive";
+          loadCustomDriveMovies();
+        } else if (genreId) {
+          sectionTitle.textContent = `${btn.textContent} Movies`;
+          fetchMovies(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`);
+        } else {
+          sectionTitle.textContent = "Trending Movies";
+          fetchMovies(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}`);
         }
+      });
+    });
 
-        // --- Game Logic ---
+    function focusSearch() {
+      showHomePage();
+      searchInput.focus();
+      searchInput.scrollIntoView({ behavior: "smooth" });
+    }
 
-        function handleCellClick(clickedCellEvent) {
-            const clickedCell = clickedCellEvent.target;
-            const clickedCellIndex = parseInt(clickedCell.getAttribute('data-index'));
-
-            if (board[clickedCellIndex] !== '' || !isGameActive || currentPlayer !== 'O') {
-                return;
-            }
-
-            // Player Move (O)
-            handlePlayerMove(clickedCell, clickedCellIndex);
-        }
-
-        function handlePlayerMove(cellElement, index) {
-            board[index] = 'O';
-            cellElement.textContent = 'O';
-            cellElement.classList.add('O');
-            playSound(clickSound);
-            
-            if (checkResult()) {
-                return;
-            }
-
-            currentPlayer = 'X';
-            statusElement.textContent = "Computer's Turn (X)";
-            
-            // Trigger Computer Move
-            setTimeout(computerMove, 700);
-        }
-
-        function computerMove() {
-            if (!isGameActive) return;
-
-            // Advanced AI Strategy:
-            let moveIndex = -1;
-
-            // 1. Check if computer can win (for 'X')
-            moveIndex = findWinningMove('X');
-            if (moveIndex === -1) {
-                // 2. Check if player can win and block them (for 'O')
-                moveIndex = findWinningMove('O');
-            }
-            if (moveIndex === -1) {
-                // 3. Try to take center
-                if (board[4] === '') moveIndex = 4;
-            }
-            if (moveIndex === -1) {
-                // 4. Try to take a corner
-                const corners = [0, 2, 6, 8];
-                for(let corner of corners) {
-                    if (board[corner] === '') {
-                        moveIndex = corner;
-                        break;
-                    }
-                }
-            }
-            if (moveIndex === -1) {
-                // 5. Take any available side
-                const sides = [1, 3, 5, 7];
-                for(let side of sides) {
-                    if (board[side] === '') {
-                        moveIndex = side;
-                        break;
-                    }
-                }
-            }
-
-
-            if (moveIndex !== -1) {
-                // Execute Computer Move (X)
-                board[moveIndex] = 'X';
-                const cellElement = document.querySelector(`[data-index="${moveIndex}"]`);
-                cellElement.textContent = 'X';
-                cellElement.classList.add('X');
-                playSound(clickSound);
-                
-                if (checkResult()) {
-                    return;
-                }
-
-                currentPlayer = 'O';
-                statusElement.textContent = "Your Turn (O)";
-            }
-        }
-
-        function findWinningMove(player) {
-            for (let i = 0; i < winningConditions.length; i++) {
-                const winCondition = winningConditions[i];
-                let [a, b, c] = winCondition;
-                
-                // Check if two of three cells are 'player' and the third is empty
-                if (board[a] === player && board[b] === player && board[c] === '') return c;
-                if (board[a] === player && board[c] === player && board[b] === '') return b;
-                if (board[b] === player && board[c] === player && board[a] === '') return a;
-            }
-            return -1; // No winning move found
-        }
-
-
-        function checkResult() {
-            let roundWon = false;
-            let winningCombo = null;
-
-            for (let i = 0; i < winningConditions.length; i++) {
-                const winCondition = winningConditions[i];
-                let a = board[winCondition[0]];
-                let b = board[winCondition[1]];
-                let c = board[winCondition[2]];
-
-                if (a === '' || b === '' || c === '') {
-                    continue;
-                }
-                if (a === b && b === c) {
-                    roundWon = true;
-                    winningCombo = winCondition;
-                    break;
-                }
-            }
-
-            if (roundWon) {
-                isGameActive = false;
-                if (currentPlayer === 'O') {
-                    statusElement.textContent = "You Win! 🎉";
-                    // Flower Shower Celebration
-                    jsConfetti.addConfetti({
-                        emojis: flowerEmojis,
-                        emojiSize: 30,
-                        confettiNumber: 60
-                    });
-                } else {
-                    statusElement.textContent = "Computer Wins! 🤖";
-                }
-                drawWinLine(winningCombo);
-                playSound(winSound);
-                resetButton.style.display = 'block';
-                return true;
-            }
-
-            // Check for Tie
-            if (!board.includes('')) {
-                isGameActive = false;
-                statusElement.textContent = "It's a Tie! 🤝";
-                playSound(tieSound);
-                resetButton.style.display = 'block';
-                return true;
-            }
-            
-            return false;
-        }
-
-        function drawWinLine(combo) {
-            const winLine = document.createElement('div');
-            winLine.classList.add('win-line');
-            
-            const [a, b, c] = combo;
-            
-            // Determine position and orientation based on the winning combination
-            if (a === 0 && b === 1 && c === 2) { winLine.classList.add('win-line-h', 'win-row-0'); }
-            else if (a === 3 && b === 4 && c === 5) { winLine.classList.add('win-line-h', 'win-row-1'); }
-            else if (a === 6 && b === 7 && c === 8) { winLine.classList.add('win-line-h', 'win-row-2'); }
-            else if (a === 0 && b === 3 && c === 6) { winLine.classList.add('win-line-v', 'win-col-0'); }
-            else if (a === 1 && b === 4 && c === 7) { winLine.classList.add('win-line-v', 'win-col-1'); }
-            else if (a === 2 && b === 5 && c === 8) { winLine.classList.add('win-line-v', 'win-col-2'); }
-            else if (a === 0 && b === 4 && c === 8) { winLine.classList.add('win-0-4-8'); }
-            else if (a === 2 && b === 4 && c === 6) { winLine.classList.add('win-2-4-6'); }
-            
-            boardElement.appendChild(winLine);
-        }
-
-    </script>
-
+    sectionTitle.textContent = "Available on Google Drive";
+    loadCustomDriveMovies();
+  </script>
 </body>
 </html>
-
-
-
