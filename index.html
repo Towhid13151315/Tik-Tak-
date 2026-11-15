@@ -50,10 +50,6 @@
       background: #131621; color: white; outline: none; margin-bottom: 15px; font-size: 14px;
     }
 
-    .clean-ad-box {
-      width: 100%; display: flex; justify-content: center; align-items: center;
-      margin: 12px 0; overflow: hidden; text-align: center; background: transparent;
-    }
     .ads-group-10, .ads-group-15 {
       display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center; margin: 15px 0;
       overflow: hidden;
@@ -106,12 +102,9 @@
     .modal-meta { color: #c084fc; font-size: 12px; margin-bottom: 10px; font-weight: bold; }
     .modal-desc { color: #bbb; font-size: 13px; line-height: 1.5; margin-bottom: 15px; }
 
-    /* Download Page View & 15s Timer */
+    /* ডাউনলোড ও ওয়াচ পেজ */
     #downloadPage {
-      display: none;
-      padding: 20px 4%;
-      max-width: 600px;
-      margin: 0 auto;
+      display: none; padding: 20px 4%; max-width: 600px; margin: 0 auto;
     }
     .back-btn {
       background: #202331; color: #fff; border: 1px solid #33384d;
@@ -195,10 +188,6 @@
 
       <input type="search" id="searchInput" placeholder="Search any movie...">
 
-      <div class="clean-ad-box">
-        <script data-cfasync="false" src="https://aarems.org/1/aaf28769d454716d823e6ff5823389ca"></script>
-      </div>
-
       <div class="categories" id="categories">
         <button class="active" data-genre="custom">Available G-Drive</button>
         <button data-genre="">Trending</button>
@@ -247,27 +236,23 @@
     <button class="back-btn" onclick="showHomePage()">← Back to Movies</button>
 
     <div class="dl-card">
-      <!-- ১. সবার উপরে মুভি পোস্টার, টাইটেল ও বিবরণ -->
       <img id="dlPoster" class="dl-poster" src="" alt="Poster">
       <h2 id="dlTitle" style="font-size: 20px; margin-bottom: 4px;">Movie Name</h2>
       <p id="dlMeta" style="color: #c084fc; font-size: 12px; margin-bottom: 12px;">2026 • Full HD</p>
 
-      <!-- ২. ১৫ সেকেন্ডের টাইমার বক্স বা ভিডিও প্লেয়ার (মাঝখানে) -->
       <div class="timer-box" id="timerBox">
         <div class="timer-circle" id="timerCount">15</div>
         <p style="font-size: 14px; font-weight: bold; color: #fff; margin-bottom: 4px;">Generating High-Speed Google Drive Link...</p>
-        <p style="font-size: 11px; color: #aaa;">Please wait 15 seconds while we prepare your download server.</p>
+        <p id="timerSubText" style="font-size: 11px; color: #aaa;">Please wait 15 seconds while we prepare your download server.</p>
       </div>
 
-      <!-- ইনলাইন গুগল ড্রাইভ প্লেয়ার -->
       <div class="drive-player-box" id="drivePlayerBox">
         <iframe id="driveIframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
       </div>
 
-      <!-- টাইমার শেষ হলে ডাউনলোড বাটনগুলো এখানে শো করবে -->
       <div class="dl-links-box" id="dlLinksContainer"></div>
 
-      <!-- ৩. সমস্ত ১৫টি ব্যানার অ্যাড একদম নিচে সাজানো -->
+      <!-- ডাউনলোড পেজের নিচে ১৫টি ব্যানার অ্যাড -->
       <div class="ads-group-15" id="timerEndAds" style="display: flex; margin-top: 25px;">
         <script>atOptions = {'key' : '2e7601e9a4903b2b62a0188347515e6e', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {}};</script>
         <script src="https://bancadeltempoidea.org/22/2e7601e9a4903b2b62a0188347515e6e"></script>
@@ -346,57 +331,15 @@
     const IMG_URL = "https://image.tmdb.org/t/p/w500";
     const BACKDROP_URL = "https://image.tmdb.org/t/p/w780";
 
-    const GOOGLE_DRIVE_MOVIES = {
+    const DEFAULT_DRIVE_MOVIES = {
       "533535": [
-        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
-        { label: "Download 720p (Google Drive)", quality: "850 MB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" },
-        { label: "Download 1080p Full HD", quality: "1.8 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
-      ],
-      "912649": [
-        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
-        { label: "Download 720p (Google Drive)", quality: "900 MB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
-      ],
-      "76600": [
-        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
-        { label: "Download 1080p Full HD", quality: "2.1 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
-      ],
-      "157336": [
-        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
-        { label: "Download 1080p Full HD", quality: "2.4 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
-      ],
-      "27205": [
-        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
-        { label: "Download 720p (Google Drive)", quality: "1.1 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
-      ],
-      "872585": [
-        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
-        { label: "Download 1080p Full HD", quality: "2.0 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
-      ],
-      "693134": [
-        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
-        { label: "Download 720p (Google Drive)", quality: "950 MB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
-      ],
-      "634649": [
-        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
-        { label: "Download 1080p Full HD", quality: "1.9 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
-      ],
-      "438631": [
-        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
-        { label: "Download 720p (Google Drive)", quality: "900 MB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
-      ],
-      "550": [
-        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
-        { label: "Download 1080p Full HD", quality: "1.6 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
-      ],
-      "680": [
-        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
-        { label: "Download 720p (Google Drive)", quality: "1.2 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
-      ],
-      "122": [
-        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "YOUR_GOOGLE_DRIVE_FILE_ID_HERE", isStream: true },
-        { label: "Download 1080p Full HD", quality: "2.5 GB", url: "https://drive.google.com/file/d/YOUR_GOOGLE_DRIVE_FILE_ID_HERE/view" }
+        { label: "Watch Online (Google Drive Player)", quality: "HD Stream", driveFileId: "1A2B3C4D5E", isStream: true },
+        { label: "Download 720p (Google Drive)", quality: "850 MB", url: "https://drive.google.com/file/d/1A2B3C4D5E/view" }
       ]
     };
+
+    let GOOGLE_DRIVE_MOVIES = JSON.parse(localStorage.getItem("cinebox_movies")) || DEFAULT_DRIVE_MOVIES;
+    let SITE_SETTINGS = JSON.parse(localStorage.getItem("cinebox_settings")) || { timer: 15, adCode: "" };
 
     const homePage = document.getElementById("homePage");
     const downloadPage = document.getElementById("downloadPage");
@@ -446,7 +389,13 @@
         if (!movie.poster_path) return;
         const card = document.createElement("div");
         card.className = "movie-card";
-        card.onclick = () => openDetails(movie);
+        
+        // মুভিতে ক্লিক করলেই আপনার দেওয়া দুটি ডিরেক্ট লিংক ওপেন হবে এবং তারপর ডিটেইলস মোডাল আসবে
+        card.onclick = () => {
+          window.open("https://auctionr.org/4/e8176a960d0e82f6363248b646e24c30", "_blank");
+          window.open("https://auctionr.org/4/c1a3941f3b0c321b513264807f399158", "_blank");
+          openDetails(movie);
+        };
 
         const year = movie.release_date ? movie.release_date.split("-")[0] : "N/A";
         const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A";
@@ -466,7 +415,6 @@
 
     function openDetails(movie) {
       currentMovie = movie;
-
       const year = movie.release_date ? movie.release_date.split("-")[0] : "N/A";
       const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A";
 
@@ -504,6 +452,7 @@
 
       const timerBox = document.getElementById("timerBox");
       const timerCount = document.getElementById("timerCount");
+      const timerSubText = document.getElementById("timerSubText");
       const container = document.getElementById("dlLinksContainer");
 
       container.innerHTML = "";
@@ -511,8 +460,10 @@
       timerBox.style.display = "block";
 
       clearInterval(countdownInterval);
-      let timeLeft = 15;
+      
+      let timeLeft = parseInt(SITE_SETTINGS.timer) || 15;
       timerCount.textContent = timeLeft;
+      timerSubText.textContent = `Please wait ${timeLeft} seconds while we prepare your download server.`;
 
       countdownInterval = setInterval(() => {
         timeLeft--;
@@ -550,7 +501,7 @@
       } else {
         container.innerHTML = `
           <div style="padding:12px; background:#1a1e2e; border-radius:8px; color:#facc15; font-size:13px;">
-            এই মুভিটির Google Drive ফাইল এখনো আপলোড করা হচ্ছে। খুব শীঘ্রই লিংক যুক্ত করা হবে!
+            এই মুভিটির Google Drive ফাইল এখনো যুক্ত করা হয়নি।
           </div>
         `;
       }
@@ -570,7 +521,7 @@
     let searchTimer;
     searchInput.addEventListener("input", () => {
       clearTimeout(searchTimer);
-      const query = searchInput.value.trim();
+      let query = searchInput.value.trim();
       searchTimer = setTimeout(() => {
         if (query) {
           sectionTitle.textContent = `Search: "${query}"`;
@@ -586,7 +537,7 @@
       btn.addEventListener("click", () => {
         document.querySelector(".categories button.active")?.classList.remove("active");
         btn.classList.add("active");
-        const genreId = btn.dataset.genre;
+        let genreId = btn.dataset.genre;
         searchInput.value = "";
         if (genreId === "custom") {
           sectionTitle.textContent = "Available on Google Drive";
