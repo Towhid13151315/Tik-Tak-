@@ -251,23 +251,15 @@
       <h2 id="dlTitle" style="font-size: 24px; margin-bottom: 6px;">Movie Name</h2>
       <p id="dlMeta" style="color: #c084fc; font-size: 13px; margin-bottom: 15px;">2026 • Full HD</p>
 
-      <!-- ২. ১৫ সেকেন্ডের টাইমার বক্স -->
+      <!-- ২. ১৫ সেকেন্ডের টাইমার বক্স (শুরুতেই শো করবে) -->
       <div class="timer-box" id="timerBox">
         <div class="timer-circle" id="timerCount">15</div>
         <p style="font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 5px;">Generating High-Speed Google Drive Link...</p>
         <p style="font-size: 12px; color: #aaa;">Please wait 15 seconds while we prepare your download server.</p>
       </div>
 
-      <!-- ইনলাইন গুগল ড্রাইভ প্লেয়ার -->
-      <div class="drive-player-box" id="drivePlayerBox">
-        <iframe id="driveIframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      </div>
-
-      <!-- টাইমার শেষ হলে ডাউনলোড বাটনগুলো এখানে শো করবে -->
-      <div class="dl-links-box" id="dlLinksContainer"></div>
-
-      <!-- ৩. সমস্ত ১৫টি ব্যানার অ্যাড একদম নিচে সাজানো -->
-      <div class="ads-group-15" id="timerEndAds" style="display: none; margin-top: 30px;">
+      <!-- ৩. পেজে ঢোকার সাথেই বা শুরুতেই ১৫টি ব্যানার অ্যাড নিচে শো করবে -->
+      <div class="ads-group-15" id="timerEndAds" style="display: flex; margin-top: 20px;">
         <script>atOptions = {'key' : '2e7601e9a4903b2b62a0188347515e6e', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {}};</script>
         <script src="https://bancadeltempoidea.org/22/2e7601e9a4903b2b62a0188347515e6e"></script>
         <script data-cfasync="false" src="https://bancadeltempoidea.org/14/7afb72719d852e8d8c62c30347049cbc"></script>
@@ -295,6 +287,14 @@
         <script>atOptions = {'key' : 'fba6266e1bb2c17c74a98d9beecc4488', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {}};</script>
         <script src="https://bancadeltempoidea.org/22/fba6266e1bb2c17c74a98d9beecc4488"></script>
       </div>
+
+      <!-- ইনলাইন গুগল ড্রাইভ প্লেয়ার -->
+      <div class="drive-player-box" id="drivePlayerBox">
+        <iframe id="driveIframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
+
+      <!-- টাইমার শেষ হলে ডাউনলোড বাটনগুলো এখানে শো করবে -->
+      <div class="dl-links-box" id="dlLinksContainer"></div>
     </div>
   </section>
 
@@ -508,7 +508,7 @@
 
       container.innerHTML = "";
       container.style.display = "none";
-      timerEndAds.style.display = "none";
+      timerEndAds.style.display = "flex"; // পেজে ঢোকার সাথেই অ্যাডগুলো শো করবে
       timerBox.style.display = "block";
 
       clearInterval(countdownInterval);
@@ -521,7 +521,6 @@
         if (timeLeft <= 0) {
           clearInterval(countdownInterval);
           timerBox.style.display = "none";
-          timerEndAds.style.display = "flex"; // ১৫ সেকেন্ড পরে অ্যাডগুলো একদম নিচে শো করবে
           container.style.display = "flex";
         }
       }, 1000);
