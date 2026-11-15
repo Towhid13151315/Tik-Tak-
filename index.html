@@ -5,166 +5,167 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CINEBOX - Watch & Download Movies</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #080a10; color: #fff; font-family: Arial, sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { background: #080a10; color: #fff; font-family: Arial, sans-serif; overflow-x: hidden; }
 
     .navbar {
-      height: 70px; padding: 0 7%; display: flex; align-items: center;
+      height: 65px; padding: 0 5%; display: flex; align-items: center;
       justify-content: space-between; background: #0c0e16; position: sticky;
-      top: 0; z-index: 10; border-bottom: 1px solid #1a1d2b;
+      top: 0; z-index: 100; border-bottom: 1px solid #1a1d2b;
     }
-    .logo { font-size: 25px; font-weight: 900; color: white; text-decoration: none; }
+    .logo { font-size: 22px; font-weight: 900; color: white; text-decoration: none; }
     .logo span { color: #a855f7; }
     .search-btn {
-      background: #202331; color: white; border: none; padding: 10px 16px;
-      border-radius: 8px; font-size: 20px; cursor: pointer;
+      background: #202331; color: white; border: none; padding: 8px 14px;
+      border-radius: 8px; font-size: 18px; cursor: pointer;
     }
 
     .hero {
-      min-height: 360px; display: flex; align-items: center; padding: 45px 8%;
-      background: linear-gradient(90deg, #080a10 15%, #080a10dd 55%, transparent),
+      min-height: 300px; display: flex; align-items: center; padding: 30px 5%;
+      background: linear-gradient(90deg, #080a10 20%, #080a10dd 70%, transparent),
                   linear-gradient(0deg, #080a10, transparent 70%),
                   url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1600");
       background-size: cover; background-position: center;
     }
-    .hero-content { max-width: 520px; }
-    .tag { color: #c084fc; letter-spacing: 3px; font-size: 12px; font-weight: bold; }
-    .hero h1 { font-size: clamp(34px, 7vw, 60px); line-height: 1.05; margin: 16px 0; }
-    .hero p { color: #bbb; line-height: 1.7; margin-bottom: 22px; }
+    .hero-content { max-width: 100%; }
+    .tag { color: #c084fc; letter-spacing: 2px; font-size: 11px; font-weight: bold; }
+    .hero h1 { font-size: clamp(28px, 6vw, 50px); line-height: 1.1; margin: 12px 0; }
+    .hero p { color: #bbb; font-size: 14px; line-height: 1.6; margin-bottom: 18px; }
 
     .watch-btn {
-      display: inline-block; background: #9333ea; color: white; padding: 14px 22px;
+      display: inline-block; background: #9333ea; color: white; padding: 12px 20px;
       border-radius: 8px; text-decoration: none; font-weight: bold; border: none;
-      cursor: pointer; font-size: 15px; text-align: center; width: 100%;
+      cursor: pointer; font-size: 14px; text-align: center; width: 100%;
       transition: 0.2s;
     }
     .watch-btn:hover { background: #7e22ce; }
 
-    .movies-section { padding: 35px 7%; }
-    .section-heading { margin-bottom: 20px; }
-    .section-heading h2 { font-size: 25px; margin-bottom: 6px; }
-    .section-heading span { color: #888; font-size: 13px; }
+    .movies-section { padding: 25px 4%; }
+    .section-heading { margin-bottom: 15px; }
+    .section-heading h2 { font-size: 22px; margin-bottom: 4px; }
+    .section-heading span { color: #888; font-size: 12px; }
 
     #searchInput {
-      width: 100%; padding: 15px; border-radius: 9px; border: 1px solid #292d3b;
-      background: #131621; color: white; outline: none; margin-bottom: 20px; font-size: 15px;
+      width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #292d3b;
+      background: #131621; color: white; outline: none; margin-bottom: 15px; font-size: 14px;
     }
 
     .clean-ad-box {
       width: 100%; display: flex; justify-content: center; align-items: center;
-      margin: 15px 0; overflow: hidden; text-align: center; background: transparent;
+      margin: 12px 0; overflow: hidden; text-align: center; background: transparent;
     }
     .ads-group-10, .ads-group-15 {
-      display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; margin: 15px 0;
+      display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center; margin: 15px 0;
+      overflow: hidden;
     }
 
-    .categories { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 20px; }
+    .categories { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; }
+    .categories::-webkit-scrollbar { display: none; }
     .categories button {
-      padding: 9px 18px; border: 1px solid #292d3b; background: #131621;
-      color: #aaa; border-radius: 20px; white-space: nowrap; cursor: pointer;
+      padding: 8px 16px; border: 1px solid #292d3b; background: #131621;
+      color: #aaa; border-radius: 20px; white-space: nowrap; cursor: pointer; font-size: 13px;
     }
     .categories button.active { background: #9333ea; color: white; border-color: #9333ea; }
 
-    .movie-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .movie-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .movie-card { cursor: pointer; min-width: 0; position: relative; }
     .poster {
-      aspect-ratio: 2 / 3; border-radius: 12px; background: #151824;
-      overflow: hidden; transition: 0.3s; border: 1px solid transparent; position: relative;
+      aspect-ratio: 2 / 3; border-radius: 10px; background: #151824;
+      overflow: hidden; border: 1px solid transparent; position: relative;
     }
     .poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .movie-card:hover .poster { transform: translateY(-5px); border-color: #a855f7; }
     .badge-hd {
-      position: absolute; top: 8px; left: 8px; background: #16a34a;
-      color: white; font-size: 10px; font-weight: bold; padding: 3px 7px; border-radius: 4px;
+      position: absolute; top: 6px; left: 6px; background: #16a34a;
+      color: white; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 4px;
     }
     .movie-card h3 {
-      margin-top: 10px; font-size: 15px; white-space: nowrap;
+      margin-top: 8px; font-size: 13px; white-space: nowrap;
       overflow: hidden; text-overflow: ellipsis;
     }
-    .movie-card p { color: #888; margin-top: 5px; font-size: 12px; }
+    .movie-card p { color: #888; margin-top: 3px; font-size: 11px; }
 
     /* Modal */
     .modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(8, 10, 16, 0.95); z-index: 100; justify-content: center;
-      align-items: center; padding: 15px; overflow-y: auto;
+      background: rgba(8, 10, 16, 0.95); z-index: 1000; justify-content: center;
+      align-items: center; padding: 10px; overflow-y: auto;
     }
     .modal-content {
-      background: #121520; width: 100%; max-width: 720px; border-radius: 14px;
+      background: #121520; width: 100%; max-width: 600px; border-radius: 12px;
       overflow: hidden; border: 1px solid #292d3b; position: relative;
-      max-height: 92vh; overflow-y: auto;
+      max-height: 90vh; overflow-y: auto;
     }
     .close-btn {
-      position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.75);
-      color: white; border: none; width: 36px; height: 36px; border-radius: 50%;
-      font-size: 20px; cursor: pointer; z-index: 10;
+      position: absolute; top: 10px; right: 10px; background: rgba(0, 0, 0, 0.75);
+      color: white; border: none; width: 32px; height: 32px; border-radius: 50%;
+      font-size: 18px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;
     }
-    .modal-banner { width: 100%; height: 220px; object-fit: cover; }
-    .modal-body { padding: 20px; }
-    .modal-body h2 { font-size: 22px; margin-bottom: 8px; }
-    .modal-meta { color: #c084fc; font-size: 13px; margin-bottom: 12px; font-weight: bold; }
-    .modal-desc { color: #bbb; font-size: 14px; line-height: 1.6; margin-bottom: 18px; }
+    .modal-banner { width: 100%; height: 180px; object-fit: cover; }
+    .modal-body { padding: 15px; }
+    .modal-body h2 { font-size: 18px; margin-bottom: 6px; }
+    .modal-meta { color: #c084fc; font-size: 12px; margin-bottom: 10px; font-weight: bold; }
+    .modal-desc { color: #bbb; font-size: 13px; line-height: 1.5; margin-bottom: 15px; }
 
     /* Download Page View & 15s Timer */
     #downloadPage {
       display: none;
-      padding: 25px 7%;
-      max-width: 800px;
+      padding: 20px 4%;
+      max-width: 600px;
       margin: 0 auto;
     }
     .back-btn {
       background: #202331; color: #fff; border: 1px solid #33384d;
-      padding: 10px 18px; border-radius: 8px; cursor: pointer;
-      font-size: 14px; margin-bottom: 20px; display: inline-block;
+      padding: 8px 14px; border-radius: 6px; cursor: pointer;
+      font-size: 13px; margin-bottom: 15px; display: inline-block;
     }
     .dl-card {
-      background: #121520; border: 1px solid #292d3b; border-radius: 14px;
-      padding: 22px; text-align: center;
+      background: #121520; border: 1px solid #292d3b; border-radius: 12px;
+      padding: 15px; text-align: center;
     }
     .dl-poster {
-      width: 140px; border-radius: 10px; margin: 0 auto 15px; display: block;
+      width: 110px; border-radius: 8px; margin: 0 auto 12px; display: block;
       border: 2px solid #9333ea;
     }
     .timer-box {
-      background: #1a1e2e; border: 1px solid #9333ea; border-radius: 12px;
-      padding: 20px; margin: 20px 0;
+      background: #1a1e2e; border: 1px solid #9333ea; border-radius: 10px;
+      padding: 15px; margin: 15px 0;
     }
     .timer-circle {
-      width: 64px; height: 64px; border-radius: 50%; background: #9333ea;
-      color: white; font-size: 24px; font-weight: bold; display: flex;
-      align-items: center; justify-content: center; margin: 0 auto 12px;
-      box-shadow: 0 0 15px rgba(147, 51, 234, 0.5);
+      width: 50px; height: 50px; border-radius: 50%; background: #9333ea;
+      color: white; font-size: 20px; font-weight: bold; display: flex;
+      align-items: center; justify-content: center; margin: 0 auto 10px;
+      box-shadow: 0 0 10px rgba(147, 51, 234, 0.4);
     }
     .dl-links-box {
-      display: none; flex-direction: column; gap: 12px; margin-top: 20px;
+      display: none; flex-direction: column; gap: 10px; margin-top: 15px;
     }
     .gdrive-btn {
       display: flex; align-items: center; justify-content: space-between;
       background: linear-gradient(90deg, #16a34a, #15803d); color: white;
-      padding: 15px 20px; border-radius: 10px; text-decoration: none;
-      font-weight: bold; font-size: 15px; border: none; cursor: pointer;
+      padding: 12px 15px; border-radius: 8px; text-decoration: none;
+      font-weight: bold; font-size: 13px; border: none; cursor: pointer;
     }
     .gdrive-btn:hover { opacity: 0.92; }
     .gdrive-btn span.quality {
-      background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 6px; font-size: 12px;
+      background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 4px; font-size: 11px;
     }
     .drive-player-box {
-      margin-top: 20px; width: 100%; aspect-ratio: 16 / 9;
-      background: #000; border-radius: 10px; overflow: hidden; display: none;
+      margin-top: 15px; width: 100%; aspect-ratio: 16 / 9;
+      background: #000; border-radius: 8px; overflow: hidden; display: none;
     }
     .drive-player-box iframe { width: 100%; height: 100%; border: none; }
 
     footer {
-      text-align: center; padding: 30px; background: #0c0e16;
-      color: #888; line-height: 2; margin-top: 30px;
+      text-align: center; padding: 25px 15px; background: #0c0e16;
+      color: #888; line-height: 1.8; margin-top: 25px; font-size: 13px;
     }
-    footer h2 { color: #a855f7; }
+    footer h2 { color: #a855f7; font-size: 18px; }
 
-    @media (max-width: 700px) {
-      .hero { min-height: 300px; padding: 30px 6%; }
-      .movies-section { padding: 25px 5%; }
-      .movie-grid { grid-template-columns: repeat(2, 1fr); gap: 16px 12px; }
-      .modal-banner { height: 170px; }
+    @media (min-width: 768px) {
+      .movie-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; }
+      .hero { padding: 40px 7%; }
+      .movies-section { padding: 30px 7%; }
+      #downloadPage { padding: 25px 7%; }
     }
   </style>
 </head>
@@ -210,7 +211,7 @@
       <div class="movie-grid" id="movieGrid"></div>
 
       <!-- হোম পেজের একদম নিচে ১৫টি ব্যানার অ্যাড -->
-      <div class="ads-group-15" style="margin-top: 50px;">
+      <div class="ads-group-15" style="margin-top: 35px;">
         <script>atOptions = {'key' : '2e7601e9a4903b2b62a0188347515e6e', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {}};</script>
         <script src="https://bancadeltempoidea.org/22/2e7601e9a4903b2b62a0188347515e6e"></script>
         <script data-cfasync="false" src="https://bancadeltempoidea.org/14/7afb72719d852e8d8c62c30347049cbc"></script>
@@ -248,14 +249,14 @@
     <div class="dl-card">
       <!-- ১. সবার উপরে মুভি পোস্টার, টাইটেল ও বিবরণ -->
       <img id="dlPoster" class="dl-poster" src="" alt="Poster">
-      <h2 id="dlTitle" style="font-size: 24px; margin-bottom: 6px;">Movie Name</h2>
-      <p id="dlMeta" style="color: #c084fc; font-size: 13px; margin-bottom: 15px;">2026 • Full HD</p>
+      <h2 id="dlTitle" style="font-size: 20px; margin-bottom: 4px;">Movie Name</h2>
+      <p id="dlMeta" style="color: #c084fc; font-size: 12px; margin-bottom: 12px;">2026 • Full HD</p>
 
       <!-- ২. ১৫ সেকেন্ডের টাইমার বক্স বা ভিডিও প্লেয়ার (মাঝখানে) -->
       <div class="timer-box" id="timerBox">
         <div class="timer-circle" id="timerCount">15</div>
-        <p style="font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 5px;">Generating High-Speed Google Drive Link...</p>
-        <p style="font-size: 12px; color: #aaa;">Please wait 15 seconds while we prepare your download server.</p>
+        <p style="font-size: 14px; font-weight: bold; color: #fff; margin-bottom: 4px;">Generating High-Speed Google Drive Link...</p>
+        <p style="font-size: 11px; color: #aaa;">Please wait 15 seconds while we prepare your download server.</p>
       </div>
 
       <!-- ইনলাইন গুগল ড্রাইভ প্লেয়ার -->
@@ -267,7 +268,7 @@
       <div class="dl-links-box" id="dlLinksContainer"></div>
 
       <!-- ৩. সমস্ত ১৫টি ব্যানার অ্যাড একদম নিচে সাজানো -->
-      <div class="ads-group-15" id="timerEndAds" style="display: flex; margin-top: 30px;">
+      <div class="ads-group-15" id="timerEndAds" style="display: flex; margin-top: 25px;">
         <script>atOptions = {'key' : '2e7601e9a4903b2b62a0188347515e6e', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {}};</script>
         <script src="https://bancadeltempoidea.org/22/2e7601e9a4903b2b62a0188347515e6e"></script>
         <script data-cfasync="false" src="https://bancadeltempoidea.org/14/7afb72719d852e8d8c62c30347049cbc"></script>
@@ -310,7 +311,7 @@
         <button class="watch-btn" id="playTrailerBtn" onclick="handleMovieClick()">▶ Watch / Download Movie</button>
 
         <!-- মোডাল পপআপের একদম নিচে ১০টি ব্যানার অ্যাড -->
-        <div class="ads-group-10" style="margin-top: 15px;">
+        <div class="ads-group-10" style="margin-top: 12px;">
           <script>atOptions = {'key' : '1196b1f23a8f7693bc6a46b11e956d29', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}};</script>
           <script src="https://bancadeltempoidea.org/22/1196b1f23a8f7693bc6a46b11e956d29"></script>
           <script>atOptions = {'key' : '04ba5bdc62fb385f2336aeaa4866657e', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};</script>
@@ -548,7 +549,7 @@
         });
       } else {
         container.innerHTML = `
-          <div style="padding:15px; background:#1a1e2e; border-radius:8px; color:#facc15; font-size:14px;">
+          <div style="padding:12px; background:#1a1e2e; border-radius:8px; color:#facc15; font-size:13px;">
             এই মুভিটির Google Drive ফাইল এখনো আপলোড করা হচ্ছে। খুব শীঘ্রই লিংক যুক্ত করা হবে!
           </div>
         `;
